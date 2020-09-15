@@ -1,0 +1,87 @@
+<div class="container">
+  <p-fieldset legend="Broker Name" [toggleable]="true">
+    <div class="row">
+      <div class="col-sm-4">
+        <label for="brokerName">Broker Name</label><br>
+        <p-dropdown id="brokerName"
+                    [options]="brokers"
+                    [(ngModel)]="selectedBroker"
+                    placeholder="Select a Broker"
+                    optionLabel="name"
+                    (onChange)="onBrokerSelected($event)"
+                    [showClear]="true">
+        </p-dropdown>
+      </div>
+    </div>
+  </p-fieldset>
+
+  <p-fieldset *ngIf="queue.brokerName" legend="Queue Configuration" [toggleable]="true">
+    <div class="row">
+      <div class="col-sm-4">
+        <label for="username">Username</label>
+        <br>
+        <input id="username" pInputText [(ngModel)]="queue.username"/>
+      </div>
+      <div class="col-sm-4">
+        <label for="password">Password</label>
+        <br>
+        <input id="password" type="password" pInputText [(ngModel)]="queue.password"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <label for="url">URL</label>
+        <br>
+        <input id="url" pInputText [(ngModel)]="queue.url"/>
+      </div>
+      <div class="col-sm-4">
+        <label for="queueName">Queue Name</label>
+        <br>
+        <input id="queueName" pInputText [(ngModel)]="queue.queueName"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <br>
+        <p-button label="Connect" (onClick)="checkBrokerConnection()"></p-button>
+      </div>
+    </div>
+  </p-fieldset>
+
+  <p-tabView *ngIf="queue.brokerName">
+    <p-tabPanel header="Send">
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="correlationIdSend">Correlation Id</label>
+          <br>
+          <input id="correlationIdSend" pInputText [(ngModel)]="correlationIdSend"/>
+        </div>
+        <div class="col-sm-8">
+          <label for="msg">Message Body</label>
+          <br>
+          <textarea id="msg" pInputTextarea [(ngModel)]="msg"></textarea>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <p-button label="Send Message" (onClick)="checkBrokerConnection()"></p-button>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Receive">
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="correlationIdReceive">Correlation Id</label>
+          <br>
+          <input id="correlationIdReceive" pInputText [(ngModel)]="correlationIdReceive"/>
+        </div>
+        <div class="col-sm-8">
+          <label for="msg-rec">Message Body</label>
+          <br>
+          <textarea id="msg-rec" pInputTextarea [(ngModel)]="msg"></textarea>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <p-button label="Get Message" (onClick)="checkBrokerConnection()"></p-button>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</div>
